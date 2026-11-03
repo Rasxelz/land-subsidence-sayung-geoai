@@ -51,7 +51,7 @@ This repository provides a full pipeline documentation implementing Small Baseli
   - Spatial Matrix: 64 x 64 grid cells (~100 m ground resolution per pixel)
 - Geodetic Zero-Displacement Reference Point:
   - Station Name: Lempongsari Benchmark (Southern Semarang volcanic hills)
-  - Coordinates: Latitude -6.992 deg S, Longitude 110.412 deg E
+  - Coordinates: Latitude -6.992 ° S, Longitude 110.412 ° E
   - Geological Context: Stable bedrock formation verified against regional geodetic networks
 
 ---
@@ -71,7 +71,9 @@ $$\mathbf{X} \in \mathbb{R}^{B \times T \times H \times W \times C} \implies (B,
 
 ### 2. Zero-Interpolation Masked Objective
 Due to extensive inundated aquaculture ponds and coastal wetlands, invalid and decorrelated radar pixels are retained as masked coordinates rather than filled with interpolated values. Network loss is computed strictly over coherent land pixels:
+
 $$\mathcal{L}_{\text{masked}} = \frac{\sum_{i=1}^{H}\sum_{j=1}^{W} M_{i,j} \cdot (y_{i,j} - \hat{y}_{i,j})^2}{\sum_{i=1}^{H}\sum_{j=1}^{W} M_{i,j} + \epsilon}$$
+
 where $M_{i,j} \in \{0, 1\}$ represents the binary land validity mask ($\gamma \ge 0.35$).
 
 ### 3. Chronological Partitioning with Transition Buffers
