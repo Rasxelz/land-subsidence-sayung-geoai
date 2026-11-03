@@ -1,18 +1,18 @@
 # Benchmarking Deep Spatiotemporal Models for Land Subsidence Projection Using SBAS-InSAR in Sayung District, Demak, Indonesia
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Framework](https://img.shields.io/badge/Framework-TensorFlow_2.x-orange.svg)]
-[![InSAR Engine](https://img.shields.io/badge/InSAR-ISCE2%20%7C%20MintPy-purple.svg)]
+[![Framework](https://img.shields.io/badge/Framework-TensorFlow_2.x-orange.svg)]()
+[![InSAR Engine](https://img.shields.io/badge/InSAR-ISCE2%20%7C%20MintPy-purple.svg)]()
 [![Satellite Data](https://img.shields.io/badge/SAR-Sentinel--1%20IW%20SLC-brightgreen.svg)](https://search.asf.alaska.edu/)
-[![Study Area](https://img.shields.io/badge/AOI-Sayung%2C%20Demak%20(64x64)-red.svg)]
+[![Study Area](https://img.shields.io/badge/AOI-Sayung%2C%20Demak%20(64x64)-red.svg)]()
 
 ---
 
 ## Research Overview
 
-Land subsidence along the northern coastline of Central Java poses severe geomorphological and socioeconomic risks. In Sayung District, Demak Regency, subsidence rates reach up to 150 mm/year, resulting in over 810 mm of cumulative vertical ground displacement between 2021 and 2026. This ongoing settlement has driven coastal retreat of up to 2 km, widespread tidal inundation, and structural damage to residences and the National North Coast Highway.
+Land subsidence along the northern coastline of Central Java is facing severe land subsidence and socioeconomic crisis. In Sayung District, Demak Regency, subsidence rates reach up to 150 mm/year, resulting in over 810 mm of cumulative ground displacement between 2021 and 2026. This ongoing settlement has driven coastal retreat of up to 2 km, widespread tidal inundation, and structural damage to residences and the National North Coast Highway.
 
-This repository provides an end-to-end computational pipeline integrating Small Baseline Subset Interferometric Synthetic Aperture Radar (SBAS-InSAR) with spatiotemporal deep learning models. The workflow processes 124 Sentinel-1 Single Look Complex (SLC) scenes acquired from January 2021 to April 2026 into an un-interpolated 5D tensor, benchmarking Convolutional Long Short-Term Memory (ConvLSTM), CNN-LSTM, and Pixel-Wise Linear Regression across multi-horizon recursive projections ($t+1$, $t+6$, and $t+17$) through the year 2030.
+This repository provides a full pipeline documentation implementing Small Baseline Subset Interferometric Synthetic Aperture Radar (SBAS-InSAR) with spatiotemporal deep learning models. The workflow processes 124 Sentinel-1 Single Look Complex (SLC) scenes acquired from January 2021 to April 2026 into an un-interpolated 5D tensor, benchmarking Convolutional Long Short-Term Memory (ConvLSTM), CNN-LSTM, and Pixel-Wise Linear Regression across multi-horizon recursive projections ($t+1$, $t+6$, and $t+17$) through the year 2030.
 
 ---
 
@@ -20,7 +20,6 @@ This repository provides an end-to-end computational pipeline integrating Small 
 
 | Parameter | Configuration / Specification | Technical Description |
 | :--- | :--- | :--- |
-| Satellite Mission | Sentinel-1A / Sentinel-1B | C-band Synthetic Aperture Radar (radar frequency ~5.405 GHz, wavelength ~5.55 cm) |
 | Acquisition Mode | Interferometric Wide (IW) Swath | Single Look Complex (SLC), TOPSAR acquisition mode |
 | Polarization | Dual Polarization (VV + VH) | Co-polar and cross-polar channels for phase stability and surface scattering analysis |
 | Flight Direction / Pass | Descending | North-to-South morning orbit geometry |
@@ -29,32 +28,31 @@ This repository provides an end-to-end computational pipeline integrating Small 
 | Subswath and Burst Coverage | IW2 (Targeted Burst Extraction) | Spatial cropping isolates bursts 1 to 3 in subswath IW2 |
 | Temporal Coverage | January 2021 - April 2026 | 124 SLC acquisitions sampled at a nominal 12-day revisit interval |
 | Orbital Ephemerides | AUX_POEORB | ESA Precise Orbit Determination (POD) to remove orbital phase ramps |
-| Reference DEM | SRTM 30 m (1 arc-second) | Global SRTMGL1 stitched and converted to ellipsoidal WGS84 coordinates via dem.py |
+| Reference DEM | SRTM 30 m (1 arc-second) | Global SRTMGL1 stitched and converted to ellipsoidal WGS84 coordinates |
 | Spatial Baseline Constraint | Bperp <= 100 m | Upper bound on perpendicular orbital baseline to limit spatial decorrelation |
 | Temporal Baseline Constraint | Delta t <= 48 days | Revisit interval limit to minimize decorrelation over wetlands and dynamic land cover |
 | Phase Filter and Unwrapping | Adaptive Goldstein + SNAPHU | Minimum spatial coherence threshold of 0.35 applied during statistical 2D unwrapping |
-| Time-Series Inversion | Weighted Least Squares (WLS) | Out-of-core row-streaming SVD least-squares inversion implemented via ISCE2 and MintPy |
+| Time-Series Inversion | Weighted Least Squares (WLS) | Implemented via ISCE2 and MintPy |
 
 ---
 
 ## Study Area and Geodetic Reference
 
 - Spatial Processing Bounds (Kendal, Semarang, and Demak regional processing AOI):
-  - North: -6.800 deg
-  - South: -7.100 deg
-  - West: 110.100 deg
-  - East: 110.650 deg
+  - North: -6.800 °
+  - South: -7.100 °
+  - West: 110.100 °
+  - East: 110.650 °
 - Target Modeling Bounds (Sayung District grid AOI):
-  - North: -6.859 deg
-  - South: -6.987 deg
-  - West: 110.478 deg
-  - East: 110.566 deg
+  - North: -6.859 °
+  - South: -6.987 °
+  - West: 110.478 °
+  - East: 110.566 °
   - Spatial Matrix: 64 x 64 grid cells (~100 m ground resolution per pixel)
 - Geodetic Zero-Displacement Reference Point:
   - Station Name: Lempongsari Benchmark (Southern Semarang volcanic hills)
   - Coordinates: Latitude -6.992 deg S, Longitude 110.412 deg E
   - Geological Context: Stable bedrock formation verified against regional geodetic networks
-  - Calibration Offset: -0.00488247 m
 
 ---
 
@@ -129,25 +127,3 @@ Models were evaluated on the holdout test set using open-loop recursive forecast
 - `02_insar_stack_processing.ipynb`: Preparation of 30 m SRTM DEM, input validation, execution of `stackSentinel.py` for subswath IW2 bursts 1 to 3, coregistration via Geometric Back-Geocoding with Enhanced Spectral Diversity (ESD), baseline configuration ($B_\perp \le 100\text{ m}, \Delta t \le 48\text{ days}$), and SNAPHU phase unwrapping.
 - `03_timeseries_inversion_and_tensor_formatting.ipynb`: Upstream audit of 245 unwrapped interferograms, perpendicular baseline harmonization via the triangle closure law, compilation of `ifgramStack.h5`, row-streaming SVD least-squares inversion into `timeseries_manual.h5`, phase-to-displacement conversion, and Lempongsari zero-referencing.
 - `04_geoai_spatiotemporal_modeling.ipynb`: Construction of the 5D spatiotemporal tensor $(B, 12, 64, 64, 3)$, chronological data splitting with double transition buffers, masked loss formulation, benchmarking of ConvLSTM, CNN-LSTM, and Linear Regression across $t+1$, $t+6$, and $t+17$, and recursive spatial projection through 2030.
-
----
-
-## Installation and Setup
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/rasxelz/land-subsidence-sayung-geoai.git
-cd land-subsidence-sayung-geoai
-```
-
-### 2. Configure Environment
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
